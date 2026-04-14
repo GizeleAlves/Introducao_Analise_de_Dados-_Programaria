@@ -28,3 +28,7 @@ def cramer_coeficiente(coluna1, coluna2):
 cramer_coeficiente(dados['COR/RACA/ETNIA'], dados['NIVEL DE ENSINO']) #Verificando se existe e qual a correlação entre a escolaridade e a etnia
   
 #Este resultado sugere que, na nossa amostra, etnias diferentes têm níveis de ensino semelhantes, possivelmente devido ao contexto da área de TI, onde a maioria já tem algum tipo de formação.
+# %% Salvando os dados em csv
+
+dados.to_csv('C:/Users/gizel/OneDrive/Desktop/Programaria/analise_dados.csv', index=False)
+
