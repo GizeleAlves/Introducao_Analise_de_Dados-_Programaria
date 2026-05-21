@@ -87,14 +87,18 @@ dados.columns
 
 dados = dados[['IDADE', 'GENERO', 'NAO_BRANCA', 'TEMPO_EXPERIENCIA', 'SETOR', 'REGIAO ONDE MORA', 'NIVEL DE ENSINO','NUMERO DE FUNCIONARIOS', 'SALARIO', 'NOVO_NIVEL']]
 
-#
+#Converte os textos em números
 
 dados = pd.get_dummies(dados, columns=['GENERO', 'SETOR', 'NOVO_NIVEL', 'REGIAO ONDE MORA'], drop_first=True)
 
 X = dados.drop('SALARIO', axis=1)
 y = dados['SALARIO']
 
+#divide os dados entre treino e teste
+
 x_train, x_test, y_train, y_test = train_test_split(X, y,test_size=0.2, random_state=42)
+
+#padroniza os dados
 
 scaler = StandardScaler()
 
