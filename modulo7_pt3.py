@@ -11,6 +11,10 @@ from sklearn.preprocessing import StandardScaler
 
 from sklearn.linear_model import LinearRegression
 
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
+
+import matplotlib.pyplot as plt
+
 dados = pd.read_excel('C:/Users/gizel/OneDrive/Desktop/Programaria/analise_dados_mod7_(1).xlsx')
 
 # %%
@@ -106,3 +110,47 @@ scaler = StandardScaler()
 
 x_train_scaled = scaler.fit_transform(x_train)
 x_test_scaled = scaler.fit_transform(x_test)
+# %% Módulo 7 - Parte 3
+# Criando o modelo
+model = LinearRegression()
+
+#Treinando o modelo
+model.fit(x_train_scaled, y_train)
+
+#Prevendo os valores de salário
+y_pred = model.predict(x_test_scaled)
+# %% Avaliação do modelo
+
+# Erro quadrático médio - MSE (Média de diferença entre o valor predito e o valor real elevado ao quadrado)
+
+mse = mean_squared_error(y_test, y_pred)
+
+#MAE -  Erro médio da diferença absoluta
+mae = mean_absolute_error(y_test, y_pred)
+
+#R² - Quão próximo os dados estão da linha de regressão (Porcentagem da variação da variável resposta)
+r2 = r2_score(y_test, y_pred)
+# %% comparando os salários com os valores preditos
+
+plt.figure(figsize=(10,6))
+plt.scatter(y_test, y_pred, alpha=0.5)
+plt.xlabel("Valor Real")
+plt.ylabel("Valor Predito")
+plt.title("Dispersão dos Dados")
+plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], color='red', linewidth=2)
+plt.show()
+
+# %%Verificando quais atributos tiveram maior peso
+
+nomes_atributos = x_train.columns
+
+#criando um dataframe com os coeficientes do modelo
+coefs = pd.DataFrame(model.coef_, columns=['coeficientes'], index= nomes_atributos)
+
+#ordenando os valores pra ver qual está influenciando mais
+coefs = coefs.sort_values(by='coeficientes', ascending=False)
+
+#plotando um grpafico de barras
+coefs.plot.barh(figsize=(8,6))
+plt.axvline(x=0, color="red")
+          
